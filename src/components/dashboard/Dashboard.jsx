@@ -15,6 +15,7 @@ const PALETTES = {
 
 export default function Component() {
   const [active, setActive] = useState(0)
+  const [isLoaded, setIsLoaded] = useState(false)
   const listRefs = useRef([])
   const sphereRef = useRef(null)
   const ctx = useRef(null)
@@ -29,6 +30,12 @@ export default function Component() {
     ctx.current = gsap.context(() => {
       positionItems(active, { immediate: true })
     })
+    
+    // Trigger fade-in animation after initial setup
+    setTimeout(() => {
+      setIsLoaded(true)
+    }, 100)
+    
     return () => ctx.current?.revert()
   }, [])
 
@@ -124,10 +131,20 @@ export default function Component() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-black text-white">
+    <div 
+      className={`min-h-screen w-full bg-black text-white transition-opacity duration-1000 ease-out ${
+        isLoaded ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-8 md:px-6 md:py-16 md:h-screen">
-        <div className="relative flex flex-col md:flex-row items-center justify-center w-full">
-          <div className="relative md:-translate-x-24 mb-8 md:mb-0">
+        {/* Main container for circle and options */}
+        <div className={`relative flex flex-col md:flex-row items-center justify-center w-full transition-opacity duration-800 ease-out delay-200 ${
+          isLoaded ? 'opacity-100' : 'opacity-0'
+        }`}>
+          {/* Sphere */}
+          <div className={`relative md:-translate-x-24 mb-8 md:mb-0 transition-opacity duration-800 ease-out delay-400 ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}>
             <div
               ref={sphereRef}
               aria-hidden="true"
@@ -168,7 +185,9 @@ export default function Component() {
             </div>
           </div>
 
-          <div className="relative flex items-center justify-center w-full md:absolute md:inset-0">
+          <div className={`relative flex items-center justify-center w-full md:absolute md:inset-0 transition-opacity duration-800 ease-out delay-600 ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}>
             <div className="relative w-full h-[300px] md:h-full">
               {OPTIONS.map((label, i) => (
                 <button
