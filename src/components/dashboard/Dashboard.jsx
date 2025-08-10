@@ -25,7 +25,7 @@ export default function Component() {
     return { "--c1": c1, "--c2": c2, "--c3": c3 }
   }, [])
 
-  // Layout effect to set up GSAP context and initial positions
+  // Layout effect to set up GSAP context
   useLayoutEffect(() => {
     ctx.current = gsap.context(() => {
       positionItems(active, { immediate: true })
@@ -36,7 +36,11 @@ export default function Component() {
       setIsLoaded(true)
     }, 100)
     
-    return () => ctx.current?.revert()
+    return () => {
+      if (ctx.current) {
+        ctx.current.revert()
+      }
+    }
   }, [])
 
   // Add keyboard navigation support
@@ -77,56 +81,36 @@ export default function Component() {
     listRefs.current.forEach((el, i) => {
       if (!el) return
       
-      // Check if mobile/tablet
-      const isMobile = window.innerWidth < 768
+      // Calculate angle for semi-circle positioning (right side only)
+      // Spread options from -45 to +45 degrees (90-degree arc on the right)
+      const totalOptions = OPTIONS.length
+      const angleRange = Math.PI / 2 // 90 degrees in radians
+      const startAngle = -angleRange / 2 // Start from top-right
+      const angle = startAngle + (i / (totalOptions - 1)) * angleRange
       
-      if (isMobile) {
-        // Mobile: Stack options vertically below the sphere
-        const offset = i - currentIndex
-        const y = offset * 60 // Vertical spacing
-        const x = 0 // Center horizontally
-        const scale = i === currentIndex ? 1.05 : 0.95
-        const opacity = i === currentIndex ? 1 : 0.6
-        const blur = i === currentIndex ? 0 : 1
-        
-        gsap.to(el, {
-          duration: baseDur,
-          ease,
-          x,
-          y,
-          scale,
-          opacity,
-          rotateZ: 0,
-          filter: `blur(${blur}px)`,
-        })
-      } else {
-        // Desktop: Arc positioning around the sphere
-        const totalOptions = OPTIONS.length
-        const angleRange = Math.PI / 2 // 90 degrees
-        const startAngle = -angleRange / 2
-        const angle = startAngle + (i / (totalOptions - 1)) * angleRange
-        
-        const baseRadius = 240
-        const radius = i === currentIndex ? baseRadius - 10 : baseRadius
-        
-        const x = Math.cos(angle) * radius
-        const y = Math.sin(angle) * radius
-        
-        const scale = i === currentIndex ? 1.1 : 0.95
-        const opacity = i === currentIndex ? 1 : 0.5
-        const blur = i === currentIndex ? 0 : 1
-        
-        gsap.to(el, {
-          duration: baseDur,
-          ease,
-          x,
-          y,
-          scale,
-          opacity,
-          rotateZ: 0,
-          filter: `blur(${blur}px)`,
-        })
-      }
+      // Distance from circle center (adds spacing between circle and options)
+      const baseRadius = 240 // Distance from circle center
+      const radius = i === currentIndex ? baseRadius - 10 : baseRadius
+      
+      // Calculate position
+      const x = Math.cos(angle) * radius
+      const y = Math.sin(angle) * radius
+      
+      // Visual effects
+      const scale = i === currentIndex ? 1.1 : 0.95
+      const opacity = i === currentIndex ? 1 : 0.5
+      const blur = i === currentIndex ? 0 : 1
+      
+      gsap.to(el, {
+        duration: baseDur,
+        ease,
+        x,
+        y,
+        scale,
+        opacity,
+        rotateZ: 0, // Keep text horizontal and readable
+        filter: `blur(${blur}px)`,
+      })
     })
   }
 
@@ -136,86 +120,87 @@ export default function Component() {
         isLoaded ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-8 md:px-6 md:py-16 md:h-screen">
-        {/* Main container for circle and options */}
-        <div className={`relative flex flex-col md:flex-row items-center justify-center w-full transition-opacity duration-800 ease-out delay-200 ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        }`}>
-          {/* Sphere */}
-          <div className={`relative md:-translate-x-24 mb-8 md:mb-0 transition-opacity duration-800 ease-out delay-400 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}>
-            <div
-              ref={sphereRef}
-              aria-hidden="true"
-              style={{
-                ...initialVars,
-              }}
-              className="pointer-events-none relative h-[50vw] w-[50vw] max-h-[280px] max-w-[280px] min-h-[200px] min-w-[200px] md:h-[30vw] md:w-[30vw] md:max-h-[350px] md:max-w-[350px] md:min-h-[180px] md:min-w-[180px] rounded-full mx-auto"
-            >
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: `
-                    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0) 50%),
-                    radial-gradient(circle at 75% 40%, var(--c3) 0%, rgba(255,255,255,0) 35%),
-                    radial-gradient(ellipse 120% 100% at 30% 20%, var(--c1) 0%, var(--c1) 40%, var(--c2) 75%, #000 100%),
-                    radial-gradient(circle at 80% 80%, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 70%)
-                  `,
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 5px 20px rgba(0,0,0,0.2)",
-                  opacity: 0.85,
-                }}
-              />
-              <div
-                className="absolute inset-0 rounded-full opacity-[0.1]"
-                style={{
-                  background: `
-                    linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 25%, transparent 50%, rgba(255,255,255,0.1) 75%, transparent 100%),
-                    linear-gradient(-45deg, transparent 0%, rgba(0,0,0,0.1) 25%, transparent 50%, rgba(0,0,0,0.1) 75%, transparent 100%)
-                  `,
-                  backgroundSize: "20px 20px, 15px 15px",
-                }}
-              />
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "radial-gradient(ellipse 40% 30% at 30% 25%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 40%, rgba(255,255,255,0) 70%)",
-                }}
-              />
-            </div>
-          </div>
-
-          <div className={`relative flex items-center justify-center w-full md:absolute md:inset-0 transition-opacity duration-800 ease-out delay-600 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}>
-            <div className="relative w-full h-[300px] md:h-full">
-              {OPTIONS.map((label, i) => (
-                <button
-                  key={label}
-                  ref={(el) => (listRefs.current[i] = el)}
-                  onMouseEnter={() => setActive(i)}
-                  onFocus={() => setActive(i)}
-                  onClick={() => setActive(i)}
-                  className={[
-                    "absolute transform-gpu origin-center",
-                    "font-sans transition-colors whitespace-nowrap",
-                    i === active ? "text-white" : "text-gray-400 hover:text-gray-200",
-                  ].join(" ")}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                  aria-pressed={i === active}
-                >
-                  <span className="block leading-none text-[clamp(24px,5vw,52px)] md:text-[clamp(28px,4.5vw,52px)] tracking-tight">
-                    {label}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+      <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-16 h-screen">
+    {/* Main container for circle and options */}
+    <div className={`relative flex items-center justify-center transition-opacity duration-800 ease-out delay-200 ${
+      isLoaded ? 'opacity-100' : 'opacity-0'
+    }`}>
+      {/* Sphere */}
+      <div className={`relative -translate-x-24 transition-opacity duration-800 ease-out delay-400 ${
+        isLoaded ? 'opacity-100' : 'opacity-0'
+      }`}>
+        <div
+          ref={sphereRef}
+          aria-hidden="true"
+          style={{
+            ...initialVars,
+          }}
+          className="pointer-events-none relative h-[30vw] w-[30vw] max-h-[350px] max-w-[350px] min-h-[180px] min-w-[180px] rounded-full"
+        >
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: `
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0) 50%),
+                radial-gradient(circle at 75% 40%, var(--c3) 0%, rgba(255,255,255,0) 35%),
+                radial-gradient(ellipse 120% 100% at 30% 20%, var(--c1) 0%, var(--c1) 40%, var(--c2) 75%, #000 100%),
+                radial-gradient(circle at 80% 80%, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 70%)
+              `,
+              boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 5px 20px rgba(0,0,0,0.2)",
+              opacity: 0.85,
+            }}
+          />
+          <div
+            className="absolute inset-0 rounded-full opacity-[0.1]"
+            style={{
+              background: `
+                linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 25%, transparent 50%, rgba(255,255,255,0.1) 75%, transparent 100%),
+                linear-gradient(-45deg, transparent 0%, rgba(0,0,0,0.1) 25%, transparent 50%, rgba(0,0,0,0.1) 75%, transparent 100%)
+              `,
+              backgroundSize: "20px 20px, 15px 15px",
+            }}
+          />
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: "radial-gradient(ellipse 40% 30% at 30% 25%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 40%, rgba(255,255,255,0) 70%)",
+            }}
+          />
         </div>
+      </div>
+
+      {/* Options positioned around the circle */}
+      <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-800 ease-out delay-600 ${
+        isLoaded ? 'opacity-100' : 'opacity-0'
+      }`}>
+        <div className="relative w-full h-full">
+          {OPTIONS.map((label, i) => (
+            <button
+              key={label}
+              ref={(el) => (listRefs.current[i] = el)}
+              onMouseEnter={() => setActive(i)}
+              onFocus={() => setActive(i)}
+              onClick={() => setActive(i)}
+              className={[
+                "absolute transform-gpu origin-center",
+                "font-sans transition-colors whitespace-nowrap",
+                i === active ? "text-white" : "text-gray-400 hover:text-gray-200",
+              ].join(" ")}
+              style={{
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+              aria-pressed={i === active}
+            >
+              <span className="block leading-none text-[clamp(28px,4.5vw,52px)] tracking-tight">
+                {label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
       </div>
     </div>
   )
