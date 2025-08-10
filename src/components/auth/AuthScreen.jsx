@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import AnimatedLogo from './AnimatedLogo'
+import AnimatedBackground from './AnimatedBackground'
 
 export default function AuthScreen() {
   const [isLogin, setIsLogin] = useState(true)
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <AnimatedLogo />
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
+      <AnimatedBackground />
 
       {/* Modern Auth Container */}
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-extralight text-white mb-2 tracking-tight" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
@@ -31,7 +31,7 @@ export default function AuthScreen() {
             <div>
               <Input 
                 placeholder="Full name"
-                className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-600 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
+                className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-100 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
                 style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}
               />
             </div>
@@ -41,7 +41,7 @@ export default function AuthScreen() {
             <Input 
               type="email"
               placeholder="Email address"
-              className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-600 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
+              className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-100 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
               style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}
             />
           </div>
@@ -50,7 +50,7 @@ export default function AuthScreen() {
             <Input 
               type="password"
               placeholder="Password"
-              className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-600 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
+              className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-100 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
               style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}
             />
           </div>
@@ -60,7 +60,7 @@ export default function AuthScreen() {
               <Input 
                 type="password"
                 placeholder="Confirm password"
-                className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-600 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
+                className="w-full h-12 bg-transparent border-0 border-b border-gray-800 rounded-none text-white placeholder:text-gray-100 focus:border-white focus:ring-0 focus:outline-none transition-colors duration-300"
                 style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}
               />
             </div>
@@ -71,13 +71,13 @@ export default function AuthScreen() {
               <label className="flex items-center space-x-3 cursor-pointer">
                 <input 
                   type="checkbox" 
-                  className="w-4 h-4 bg-transparent border border-gray-700 rounded-sm checked:bg-white checked:border-white focus:ring-0 focus:ring-offset-0" 
+                  className="w-4 h-4 bg-transparent border border-gray-100 rounded-sm checked:bg-white checked:border-white focus:ring-0 focus:ring-offset-0" 
                 />
-                <span className="text-gray-500 text-sm font-light" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                <span className="text-gray-100 text-sm" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Remember me
                 </span>
               </label>
-              <button className="text-gray-500 hover:text-white text-sm font-light transition-colors duration-200" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+              <button className="text-gray-100 hover:text-white text-sm font-light transition-colors duration-200" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 Forgot password?
               </button>
             </div>
@@ -97,7 +97,7 @@ export default function AuthScreen() {
               <div className="w-full border-t border-gray-800"></div>
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-black px-4 text-gray-600 text-xs font-light uppercase tracking-wider" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+              <span className="bg-black px-4 text-white text-xs font-light uppercase tracking-wider" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 or
               </span>
             </div>
@@ -118,7 +118,7 @@ export default function AuthScreen() {
           </Button>
 
           <div className="text-center pt-6">
-            <span className="text-gray-600 text-sm font-light" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+            <span className="text-white text-sm font-light" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               {isLogin ? "New to Scores? " : "Already have an account? "}
             </span>
             <button 
