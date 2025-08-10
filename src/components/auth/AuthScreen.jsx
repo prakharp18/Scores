@@ -1,10 +1,18 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import AnimatedBackground from './AnimatedBackground'
 
 export default function AuthScreen() {
   const [isLogin, setIsLogin] = useState(true)
+  const navigate = useNavigate()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Navigate to dashboard after form submission
+    navigate('/dashboard')
+  }
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
@@ -26,7 +34,7 @@ export default function AuthScreen() {
         </div>
 
         {/* Form */}
-        <div className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {!isLogin && (
             <div>
               <Input 
@@ -85,6 +93,7 @@ export default function AuthScreen() {
 
           <div className="pt-4">
             <Button 
+              type="submit"
               className="w-full h-12 bg-white hover:bg-gray-100 text-black font-medium rounded-lg transition-all duration-200 hover:scale-[1.02]" 
               style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}
             >
@@ -129,7 +138,7 @@ export default function AuthScreen() {
               {isLogin ? 'Create account' : 'Sign in'}
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   )

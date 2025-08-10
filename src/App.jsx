@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from
 import { AnimatePresence } from 'framer-motion'
 import Landing from './components/notui/LandingPage'
 import AuthScreen from './components/auth/AuthScreen'
+import Dashboard from './components/dashboard/Dashboard'
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<LandingWithNavigation />} />
         <Route path="/auth" element={<AuthScreen />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </AnimatePresence>
   )
