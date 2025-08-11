@@ -1,16 +1,17 @@
 "use client"
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import gsap from "gsap"
 
 const OPTIONS = ["Typing", "Stats", "Profile", "Settings", "Practice"]
 
 const PALETTES = {
-  Typing: { c1: "#667eea", c2: "#1a202c", c3: "#a78bfa" }, // purple-blue gradient
-  Stats: { c1: "#f093fb", c2: "#2d1b69", c3: "#f8b5d1" }, // pink-purple gradient  
-  Profile: { c1: "#4facfe", c2: "#0f172a", c3: "#7dd3fc" }, // blue gradient
-  Settings: { c1: "#43e97b", c2: "#0f2027", c3: "#84fab0" }, // green gradient
-  Practice: { c1: "#fa709a", c2: "#2c1810", c3: "#fee08b" }, // pink-yellow gradient
+  Typing: { c1: "#8B7355", c2: "#2D241A", c3: "#B8A082" }, // warm brown/gold tones
+  Stats: { c1: "#6B8E6B", c2: "#1A2D1A", c3: "#8DB08D" }, // natural green tones  
+  Profile: { c1: "#5A7A8B", c2: "#1A242D", c3: "#82A8B8" }, // muted blue tones
+  Settings: { c1: "#8B6B5A", c2: "#2D1F1A", c3: "#B8928D" }, // earthy terracotta tones
+  Practice: { c1: "#7A6B8B", c2: "#241A2D", c3: "#A892B8" }, // muted purple tones
 }
 
 export default function Component() {
@@ -19,16 +20,29 @@ export default function Component() {
   const listRefs = useRef([])
   const sphereRef = useRef(null)
   const ctx = useRef(null)
+  const navigate = useNavigate()
 
   const initialVars = useMemo(() => {
     const { c1, c2, c3 } = PALETTES[OPTIONS[0]]
     return { "--c1": c1, "--c2": c2, "--c3": c3 }
   }, [])
 
+  const handleOptionClick = (index, option) => {
+    setActive(index)
+    
+    // Navigate to typing page if "Typing" is clicked
+    if (option === "Typing") {
+      // Add a small delay for smooth transition
+      setTimeout(() => {
+        navigate('/typing')
+      }, 300)
+    }
+  }
+
   // Layout effect to set up GSAP context
   useLayoutEffect(() => {
     ctx.current = gsap.context(() => {
-      positionItems(active, { immediate: true })
+      positionItems(0, { immediate: true }) // Use 0 instead of active for initial setup
     })
     
     // Trigger fade-in animation after initial setup
@@ -41,7 +55,7 @@ export default function Component() {
         ctx.current.revert()
       }
     }
-  }, [])
+  }, []) // Remove active dependency as we use 0 for initial setup
 
   // Add keyboard navigation support
   useEffect(() => {
@@ -116,11 +130,17 @@ export default function Component() {
 
   return (
     <div 
-      className={`min-h-screen w-full bg-black text-white transition-opacity duration-1000 ease-out ${
+      className={`min-h-screen w-full text-white transition-opacity duration-1000 ease-out ${
         isLoaded ? 'opacity-100' : 'opacity-0'
       }`}
+      style={{
+        background: 'transparent'
+      }}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-16 h-screen">
+      {/* Dimming overlay */}
+      <div className="absolute inset-0 bg-black/40 z-0"></div>
+      
+      <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-16 h-screen relative z-10">
     {/* Main container for circle and options */}
     <div className={`relative flex items-center justify-center transition-opacity duration-800 ease-out delay-200 ${
       isLoaded ? 'opacity-100' : 'opacity-0'
@@ -180,9 +200,9 @@ export default function Component() {
               ref={(el) => (listRefs.current[i] = el)}
               onMouseEnter={() => setActive(i)}
               onFocus={() => setActive(i)}
-              onClick={() => setActive(i)}
+              onClick={() => handleOptionClick(i, label)}
               className={[
-                "absolute transform-gpu origin-center",
+                "absolute transform-gpu origin-center cursor-pointer",
                 "font-sans transition-colors whitespace-nowrap",
                 i === active ? "text-white" : "text-gray-400 hover:text-gray-200",
               ].join(" ")}

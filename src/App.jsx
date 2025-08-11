@@ -4,6 +4,8 @@ import { AnimatePresence } from 'framer-motion'
 import Landing from './components/notui/LandingPage'
 import AuthScreen from './components/auth/AuthScreen'
 import Dashboard from './components/dashboard/Dashboard'
+import Typing from './components/notui/Typing'
+import BG from '/BG.jpg'
 
 
 function App() {
@@ -29,8 +31,18 @@ function App() {
   // Show mobile screen if on mobile/tablet
   if (isMobile) {
     return (
-      <div className="min-h-screen w-full bg-black text-white flex items-center justify-center p-8">
-        <div className="text-center max-w-md mx-auto">
+      <div 
+        className="min-h-screen w-full text-white flex items-center justify-center p-8"
+        style={{
+          backgroundImage: `url(${BG})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/70"></div>
+        <div className="text-center max-w-md mx-auto relative z-10">
           <div className="mb-8">
             <img 
               src="/tenor.gif" 
@@ -55,11 +67,22 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="App">
-        <AnimatedRoutes />
-      </div>
-    </Router>
+    <div 
+      className="min-h-screen w-full"
+      style={{
+        backgroundImage: `url(${BG})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      <Router>
+        <div className="App relative z-10">
+          <AnimatedRoutes />
+        </div>
+      </Router>
+    </div>
   )
 }
 
@@ -72,6 +95,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<LandingWithNavigation />} />
         <Route path="/auth" element={<AuthScreen />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/typing" element={<Typing />} />
       </Routes>
     </AnimatePresence>
   )

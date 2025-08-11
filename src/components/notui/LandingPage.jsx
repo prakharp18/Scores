@@ -33,19 +33,22 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="relative h-screen bg-black overflow-hidden">
+    <div className="relative h-screen overflow-hidden" style={{ background: 'transparent' }}>
+      {/* Dimming overlay */}
+      <div className="absolute inset-0 bg-black/40 z-0"></div>
+      
       {/* Mobile: Bottom-left | Laptop+: Centered */}
-      <div className="absolute bottom-8 left-8 sm:bottom-12 sm:left-12 lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 lg:text-center">
+      <div className="absolute bottom-8 left-8 sm:bottom-12 sm:left-12 lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 lg:text-center relative z-10">
         <h1
           ref={textRef}
           className="text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-light text-transparent bg-clip-text leading-[0.8] tracking-[-0.06em]"
           style={{
-            backgroundImage: "linear-gradient(90deg, #404040, #ffffff, #404040)",
+            backgroundImage: "linear-gradient(90deg, #8B7355, #D4C4A8, #8B7355)",
             backgroundSize: "200% auto",
             fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif",
             fontWeight: 200,
             letterSpacing: "-0.06em",
-            textShadow: "0 0 80px rgba(255,255,255,0.1)",
+            textShadow: "0 0 80px rgba(139,115,85,0.3)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
           }}
@@ -64,7 +67,7 @@ export default function Landing() {
             });
           }
         }}>
-          <p className="text-white/60 text-sm sm:text-lg lg:text-xl xl:text-2xl font-extralight tracking-[0.2em] uppercase">
+          <p className="text-amber-100/80 text-sm sm:text-lg lg:text-xl xl:text-2xl font-extralight tracking-[0.2em] uppercase">
             Master your typing skills
           </p>
           
@@ -86,11 +89,11 @@ export default function Landing() {
         }}>
           <div className="flex items-center justify-center space-x-3">
             <div className="flex space-x-1">
-              <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse" style={{animationDelay: '0ms'}}></div>
-              <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse" style={{animationDelay: '200ms'}}></div>
-              <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse" style={{animationDelay: '400ms'}}></div>
+              <div className="w-1.5 h-1.5 bg-amber-200/60 rounded-full animate-pulse" style={{animationDelay: '0ms'}}></div>
+              <div className="w-1.5 h-1.5 bg-amber-200/60 rounded-full animate-pulse" style={{animationDelay: '200ms'}}></div>
+              <div className="w-1.5 h-1.5 bg-amber-200/60 rounded-full animate-pulse" style={{animationDelay: '400ms'}}></div>
             </div>
-            <p className="text-white/25 text-xs font-thin tracking-wider uppercase ml-2">
+            <p className="text-amber-100/40 text-xs font-thin tracking-wider uppercase ml-2">
               Loading experience
             </p>
           </div>
