@@ -4,14 +4,14 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import gsap from "gsap"
 
-const OPTIONS = ["Typing", "Statistics", "Profile", "Settings"]
+const OPTIONS = ["Typing", "Stats", "Profile", "Settings", "Practice"]
 
 const PALETTES = {
   Typing: { c1: "#8B7355", c2: "#2D241A", c3: "#B8A082" }, // warm brown/gold tones
-  Statistics: { c1: "#6B8E6B", c2: "#1A2D1A", c3: "#8DB08D" }, // natural green tones
+  Stats: { c1: "#6B8E6B", c2: "#1A2D1A", c3: "#8DB08D" }, // natural green tones  
   Profile: { c1: "#5A7A8B", c2: "#1A242D", c3: "#82A8B8" }, // muted blue tones
   Settings: { c1: "#8B6B5A", c2: "#2D1F1A", c3: "#B8928D" }, // earthy terracotta tones
- 
+  Practice: { c1: "#7A6B8B", c2: "#241A2D", c3: "#A892B8" }, // muted purple tones
 }
 
 export default function Component() {
