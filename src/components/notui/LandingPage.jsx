@@ -35,7 +35,7 @@ return (
       {/* Dimming overlay */}
       <div className="absolute inset-0 bg-black/40 z-0"></div>
       
-      {/* Mobile: Bottom-left | Laptop+: Centered */}
+      {/* Laptop+: Centered */}
       <div className="absolute bottom-8 left-8 sm:bottom-12 sm:left-12 lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 lg:text-center relative z-10">
         <h1
           ref={textRef}

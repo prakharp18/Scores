@@ -39,13 +39,11 @@ export default function Component() {
     }
   }
 
-  // Layout effect to set up GSAP context
   useLayoutEffect(() => {
     ctx.current = gsap.context(() => {
       positionItems(0, { immediate: true }) // Use 0 instead of active for initial setup
     })
     
-    // Trigger fade-in animation after initial setup
     setTimeout(() => {
       setIsLoaded(true)
     }, 100)
@@ -55,7 +53,7 @@ export default function Component() {
         ctx.current.revert()
       }
     }
-  }, []) // Remove active dependency as we use 0 for initial setup
+  }, []) 
 
   // Add keyboard navigation support
   useEffect(() => {

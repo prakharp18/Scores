@@ -15,7 +15,6 @@ const CUSTOM_OPTIONS = [
   { id: 'copy', label: 'copy / paste' }
 ]
 
-// Virtual keyboard layout - simplified to alphabets and numbers only
 const KEYBOARD_LAYOUT = [
   ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -62,7 +61,6 @@ export default function Typing() {
     }
   }, [pressedKeys])
 
-  // Trigger fade-in animation after component mounts
   useEffect(() => {
     setTimeout(() => {
       setIsLoaded(true)
@@ -72,7 +70,6 @@ export default function Typing() {
   const restartTest = () => {
     // Reset any test state here
     console.log('Test restarted!')
-    // You can add more restart logic here later
   }
 
   const getCurrentOptions = () => {
@@ -244,9 +241,8 @@ export default function Typing() {
           ))}
         </div>
         
-        {/* Instructions */}
         <div className="mt-8 text-center">
-          <p className="text-gray-400 text-xs">
+          <p className="text-gray-400 text-base">
             tab + enter to restart test
           </p>
         </div>

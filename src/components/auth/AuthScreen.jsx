@@ -27,7 +27,6 @@ export default function AuthScreen() {
       {/* Dimming overlay to match landing page brightness */}
       <div className="absolute inset-0 bg-black/40 z-0"></div>
       
-      {/* Subtle pattern overlay */}
       <div 
         className="absolute inset-0 opacity-10"
         style={{
@@ -69,7 +68,6 @@ export default function AuthScreen() {
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {!isLogin && (
               <div>
