@@ -99,7 +99,7 @@ export default function Typing() {
       }`}
       style={{ 
         background: 'transparent', 
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif'
+        fontFamily: "'VT323', monospace"
       }}
     >
       {/* Dimming overlay */}
@@ -130,7 +130,7 @@ export default function Typing() {
                   className={`
                     px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium
                     ${activeMode === mode.id 
-                      ? 'text-white bg-white/15 border-white/20' 
+                      ? 'text-teal-300 bg-white/15 border-white/20' 
                       : 'text-gray-400 hover:text-gray-200 hover:bg-white/5'
                     }
                   `}
@@ -163,9 +163,9 @@ export default function Typing() {
                         key={value}
                         onClick={() => handleOptionSelect(isObject ? option : option)}
                         className={`
-                          px-4 py-2 rounded-lg transition-all duration-300 text-sm font-mono
+                          px-4 py-2 rounded-lg transition-all duration-300 text-sm
                           ${getCurrentSelected() === (isObject ? option : option)
-                            ? 'text-white bg-white/20 border-white/30' 
+                            ? 'text-teal-300 bg-white/20 border-white/30' 
                             : 'text-gray-400 hover:text-gray-200 hover:bg-white/5'
                           }
                         `}
@@ -225,10 +225,10 @@ export default function Typing() {
                     key={key}
                     className={`
                       ${key === 'Space' ? 'w-40' : 'w-8'} 
-                      h-8 rounded-lg flex items-center justify-center text-xs font-mono
+                      h-8 rounded-lg flex items-center justify-center text-xs
                       transition-all duration-150
                       ${isPressed 
-                        ? 'bg-white/20 text-white border-white/30 scale-95 shadow-md' 
+                        ? 'bg-teal-300/30 text-teal-300 border-teal-300/50 scale-95 shadow-md' 
                         : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
                       }
                     `}

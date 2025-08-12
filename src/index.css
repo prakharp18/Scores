@@ -2,6 +2,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Import "Beautiful Comethrue" font from CDN */
+@import url('https://fonts.cdnfonts.com/css/beautiful-comethrue');
+@import url('https://fonts.cdnfonts.com/css/anek-telugu');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -53,21 +57,22 @@
   * {
     border-color: hsl(var(--border));
   }
+
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* Example: headings in Beautiful Comethrue font */
+    font-family: 'Beautiful Comethrue', sans-serif;
     font-weight: 600;
     letter-spacing: -0.025em;
   }
-  
-  code, pre, .font-mono {
-    font-family: 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-  }
 }
+  

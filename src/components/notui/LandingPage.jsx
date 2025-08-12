@@ -6,9 +6,8 @@ export default function Landing() {
 
   useEffect(() => {
     const text = textRef.current;
-
     const tl = gsap.timeline();
-    
+
     gsap.set(text, {
       backgroundPosition: "-200% center",
       opacity: 0,
@@ -16,23 +15,22 @@ export default function Landing() {
       scale: 0.9
     });
 
-    tl.to(text, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 1.5,
-      ease: "power3.out",
-      delay: 0.5
-    })
-    .to(text, {
-      backgroundPosition: "200% center",
-      duration: 3.5,
-      ease: "power2.inOut"
-    }, "-=0.8"); 
-
+  tl.to(text, {
+  opacity: 1,
+  y: 0,
+  scale: 1,
+  duration: 1.5,
+  ease: "power3.out",
+  delay: 0.5
+})
+.to(text, {
+  backgroundPosition: "100% center",
+  duration: 3.5,
+  ease: "power2.inOut"
+}, "-=0.8");
   }, []);
 
-  return (
+return (
     <div className="relative h-screen overflow-hidden" style={{ background: 'transparent' }}>
       {/* Dimming overlay */}
       <div className="absolute inset-0 bg-black/40 z-0"></div>
@@ -43,9 +41,9 @@ export default function Landing() {
           ref={textRef}
           className="text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-light text-transparent bg-clip-text leading-[0.8] tracking-[-0.06em]"
           style={{
-            backgroundImage: "linear-gradient(90deg, #8B7355, #D4C4A8, #8B7355)",
+            backgroundImage: "linear-gradient(90deg, #298EAA, #FD861F, #A6453F, #222329)",
             backgroundSize: "200% auto",
-            fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+            fontFamily: "'Beautiful Comethrue', sans-serif",
             fontWeight: 200,
             letterSpacing: "-0.06em",
             textShadow: "0 0 80px rgba(139,115,85,0.3)",
@@ -53,26 +51,10 @@ export default function Landing() {
             WebkitTextFillColor: "transparent"
           }}
         >
-          Scores.
+          Scores .
         </h1>
         
-        {/* Enhanced subtitle with better responsive design */}
-        <div className="mt-2 sm:mt-4 lg:mt-6 opacity-0" ref={el => {
-          if (el) {
-            gsap.to(el, {
-              opacity: 0.8,
-              delay: 2.8,
-              duration: 2,
-              ease: "power2.out"
-            });
-          }
-        }}>
-          <p className="text-amber-100/80 text-sm sm:text-lg lg:text-xl xl:text-2xl font-extralight tracking-[0.2em] uppercase">
-            Master your typing skills
-          </p>
-          
-          
-        </div>
+
 
         {/* Subtle loading indicator (appears last) */}
         <div className="mt-8 lg:mt-12 opacity-0" ref={el => {
@@ -93,9 +75,9 @@ export default function Landing() {
               <div className="w-1.5 h-1.5 bg-amber-200/60 rounded-full animate-pulse" style={{animationDelay: '200ms'}}></div>
               <div className="w-1.5 h-1.5 bg-amber-200/60 rounded-full animate-pulse" style={{animationDelay: '400ms'}}></div>
             </div>
-            <p className="text-amber-100/40 text-xs font-thin tracking-wider uppercase ml-2">
-              Loading experience
-            </p>
+           <p className="text-[color:#222329] text-xs font-thin tracking-wider uppercase ml-2" style={{ fontFamily: "'VT323', monospace", opacity: 0.4 }}>
+  Loading experience
+</p>
           </div>
         </div>
       </div>

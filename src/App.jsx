@@ -5,7 +5,7 @@ import Landing from './components/notui/LandingPage'
 import AuthScreen from './components/auth/AuthScreen'
 import Dashboard from './components/dashboard/Dashboard'
 import Typing from './components/notui/Typing'
-import BG from '/BG.jpg'
+import BG from '/BG1.png'
 
 
 function App() {
