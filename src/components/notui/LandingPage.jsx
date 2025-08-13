@@ -5,7 +5,6 @@ export default function Landing() {
   const textRef = useRef(null);
 
   useEffect(() => {
-    // Preload the background image
     const img = new Image();
     img.src = "/BG1.png";
 
