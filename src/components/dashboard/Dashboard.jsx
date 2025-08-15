@@ -29,12 +29,19 @@ export default function Component() {
 
   const handleOptionClick = (index, option) => {
     setActive(index)
-    
-    // Navigate to typing page if "Typing" is clicked
-    if (option === "Typing") {
-      // Add a small delay for smooth transition
+    // map options to routes so clicking an option navigates appropriately
+    const routeMap = {
+      Typing: "/typing",
+      Settings: "/settings",
+      Stats: "/stats",
+      Profile: "/profile",
+      Practice: "/practice",
+    }
+    const route = routeMap[option]
+    if (route) {
+      // keep the small delay for smooth transition
       setTimeout(() => {
-        navigate('/typing')
+        navigate(route)
       }, 300)
     }
   }
