@@ -7,6 +7,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import Typing from './components/notui/Typing'
 import BG from '/BG1.png'
 import Settings from './components/settings/Settings'
+import Profile from './components/profile/Profile'
 
 
 function App() {
@@ -97,6 +98,7 @@ function AnimatedRoutes() {
         <Route path="/auth" element={<AuthScreen />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/typing" element={<Typing />} />
       </Routes>
     </AnimatePresence>
