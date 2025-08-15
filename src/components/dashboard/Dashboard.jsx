@@ -4,11 +4,11 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import gsap from "gsap"
 
-const OPTIONS = ["Typing", "Stats", "Profile", "Settings", "Practice"]
+const OPTIONS = ["Typing", "Statistics", "Profile", "Settings", "Practice"]
 
 const PALETTES = {
   Typing: { c1: "#8B7355", c2: "#2D241A", c3: "#B8A082" }, // warm brown/gold tones
-  Stats: { c1: "#6B8E6B", c2: "#1A2D1A", c3: "#8DB08D" }, // natural green tones  
+  Statistics: { c1: "#6B8E6B", c2: "#1A2D1A", c3: "#8DB08D" }, // natural green tones
   Profile: { c1: "#5A7A8B", c2: "#1A242D", c3: "#82A8B8" }, // muted blue tones
   Settings: { c1: "#8B6B5A", c2: "#2D1F1A", c3: "#B8928D" }, // earthy terracotta tones
   Practice: { c1: "#7A6B8B", c2: "#241A2D", c3: "#A892B8" }, // muted purple tones
@@ -65,18 +65,26 @@ export default function Component() {
   // Add keyboard navigation support
   useEffect(() => {
     const handleKeyDown = (e) => {
+      // ignore when typing into inputs
+      const tag = (e.target && e.target.tagName) || ''
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || e.metaKey || e.ctrlKey || e.altKey) return
+
       if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
         e.preventDefault()
         setActive((prev) => (prev > 0 ? prev - 1 : OPTIONS.length - 1))
       } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
         e.preventDefault()
         setActive((prev) => (prev < OPTIONS.length - 1 ? prev + 1 : 0))
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        // Activate the current option (Enter or Space)
+        e.preventDefault()
+        handleOptionClick(active, OPTIONS[active])
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [active])
 
   useEffect(() => {
     // Tweak the list and sphere when the active item changes haha
