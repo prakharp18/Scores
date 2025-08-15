@@ -58,7 +58,7 @@ export default function ProfilePage(){
   }
   const saveProfile = ()=>{ setProfile(draft); setIsEditing(false) }
 
-  // small presentational subcomponents (keeps file single-file but compact)
+  // small presentational components
   const StatCard = ({title, value}) => (
     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
       <CardHeader className="pb-3"><CardTitle className="text-sm text-gray-300 font-normal">{title}</CardTitle></CardHeader>
