@@ -61,8 +61,8 @@ export default function ProfilePage(){
   // small presentational components
   const StatCard = ({title, value}) => (
     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-      <CardHeader className="pb-3"><CardTitle className="text-sm text-gray-300 font-normal">{title}</CardTitle></CardHeader>
-      <CardContent className="pt-0"><div className="text-2xl font-bold text-teal-300">{value}</div></CardContent>
+      <CardHeader className="pb-3"><CardTitle className="text-base text-gray-300 font-medium">{title}</CardTitle></CardHeader>
+      <CardContent className="pt-0"><div className="text-3xl sm:text-4xl text-teal-300">{value}</div></CardContent>
     </Card>
   )
 
