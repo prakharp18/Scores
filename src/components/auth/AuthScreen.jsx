@@ -1,19 +1,47 @@
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import BG from '/BG1.png'
+import { signInWithGoogle } from '@/lib/auth'
 
 export default function AuthScreen() {
   const navigate = useNavigate()
 
-  const handleGoogle = () => {
-    // redirect to backend OAuth start (server implementation will handle flow)
-    window.location.href = '/api/auth/google'
+  const handleGoogle = async () => {
+    try {
+      const user = await signInWithGoogle()
+      if (!user) throw new Error('No user returned from Google')
+      const payload = { type: 'user', id: user.uid, name: user.displayName, email: user.email, photoURL: user.photoURL }
+      localStorage.setItem('auth_user', JSON.stringify(payload))
+
+      // if guest stats exist, attempt to migrate to server
+      const guestKey = localStorage.getItem('guest_stats_key')
+      if (guestKey) {
+        try {
+          const guestData = JSON.parse(localStorage.getItem(guestKey) || '[]')
+          const res = await fetch('/api/auth/migrate', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ guestId: guestKey, guestData })
+          })
+          if (res.ok) {
+            localStorage.removeItem(guestKey)
+            localStorage.removeItem('guest_stats_key')
+          }
+        } catch (e) { console.error('guest migration failed', e) }
+      }
+
+      navigate('/dashboard')
+    } catch (e) {
+      console.error('Google sign-in failed', e)
+      alert('Google sign-in failed')
+    }
   }
 
   const continueAsGuest = () => {
     const id = typeof crypto !== 'undefined' && crypto.randomUUID ? `guest_${crypto.randomUUID()}` : `guest_${Math.random().toString(36).slice(2,10)}`
     localStorage.setItem('auth_user', JSON.stringify({ type: 'guest', id, name: 'Guest', joined: new Date().toISOString() }))
-    // keep guest stats local under a predictable key
+    
     localStorage.setItem('guest_stats_key', `guest_stats_${id}`)
     navigate('/dashboard')
   }
